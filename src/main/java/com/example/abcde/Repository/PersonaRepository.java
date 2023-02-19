@@ -27,8 +27,15 @@ public interface PersonaRepository extends BaseRepository <Persona, Long>{
     //boolean existsByDni(int dni);
     @Query(value= "SELECT p FROM Persona p WHERE p.nombre LIKE %:filtro% OR p.apellido LIKE %:filtro%")
     List<Persona>search(@Param("filtro")String filtro);
+    
     @Query(value= "SELECT p FROM Persona p WHERE p.nombre LIKE %:filtro% OR p.apellido LIKE %:filtro%")
     Page<Persona>search(@Param("filtro")String filtro, Pageable pageable);
+    
+    @Query(
+            value="SELECT persona FROM persona WHERE persona.nombre LIKE %:filtro% OR persona.apellido LIKE %:filtro%",
+            nativeQuery= true
+    )
+    List<Persona>searchNativo(@Param("filtro")String filtro);
     
     @Query(
             value="SELECT persona FROM persona WHERE persona.nombre LIKE %:filtro% OR persona.apellido LIKE %:filtro%",
@@ -36,12 +43,5 @@ public interface PersonaRepository extends BaseRepository <Persona, Long>{
             nativeQuery= true
     )       
     Page<Persona>searchNativo(@Param("filtro")String filtro, Pageable pageable);
-    
-    @Query(
-            value="SELECT persona FROM persona WHERE persona.nombre LIKE %:filtro% OR persona.apellido LIKE %:filtro%",
-            nativeQuery= true
-    )
-            
-    List<Persona>searchNativo(@Param("filtro")String filtro);
     
 }

@@ -54,10 +54,7 @@ public class PersonaServiceImpl extends BaseServiceImpl<Persona, Long> implement
         }
     }
 
-    @Override
-    public Page<Persona> findAll(Pageable page) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
     
    
     

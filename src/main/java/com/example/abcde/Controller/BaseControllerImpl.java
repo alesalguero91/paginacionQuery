@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 /**
  *
  * @author salguero
+ * @param <E>
  */
 public abstract class BaseControllerImpl <E extends Base, S extends BaseServiceImpl <E, Long>> implements BaseController<E, Long> {
     @Autowired
@@ -39,7 +40,7 @@ public abstract class BaseControllerImpl <E extends Base, S extends BaseServiceI
     @GetMapping("/paged")
     public ResponseEntity<?>getAll(Pageable pageable){
         try{
-            return ResponseEntity.status(HttpStatus.OK).body(servicio.findAll());
+            return ResponseEntity.status(HttpStatus.OK).body(servicio.findAll(pageable));
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\":\"Error. por favor intente mas tarde.\"}");
         }

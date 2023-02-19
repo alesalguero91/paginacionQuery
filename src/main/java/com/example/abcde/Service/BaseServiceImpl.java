@@ -6,7 +6,6 @@
 package com.example.abcde.Service;
 
 import com.example.abcde.Entity.Base;
-import com.example.abcde.Entity.Persona;
 import com.example.abcde.Repository.BaseRepository;
 import java.io.Serializable;
 import java.util.List;
@@ -27,7 +26,7 @@ public abstract class BaseServiceImpl <E extends Base, ID extends Serializable> 
         this.baseRepository=baseRepository;
     }
     
-     @Override
+    @Override
     @Transactional
     public List<E> findAll() throws Exception {
        
@@ -39,6 +38,9 @@ public abstract class BaseServiceImpl <E extends Base, ID extends Serializable> 
         }
     }
     
+
+    @Override
+    @Transactional
     public Page<E> findAll(Pageable pageable) throws Exception{
         try{
             Page<E> entities = baseRepository.findAll(pageable);
