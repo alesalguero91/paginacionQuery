@@ -5,10 +5,19 @@
  */
 package com.example.abcde.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,7 +36,11 @@ import org.hibernate.envers.Audited;
 @NoArgsConstructor
 @AllArgsConstructor
 @Audited
-public class Domicilio extends Base{
+public class Domicilio{
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long domId;
     
     @Column(name= "calle")
     private String calle;
@@ -35,8 +48,11 @@ public class Domicilio extends Base{
     @Column(name="numero")
     private int numero;
     
-    @ManyToOne(optional = false)
-    @JoinColumn(name= "fk_localidad")
-    private Localidad localidad;
+    @JsonIgnore
+    @ManyToMany(mappedBy="domicilio")
     
+    //private List<Persona>persona= new ArrayList<Persona>();
+    private Set<Persona>persona= new HashSet<>();
+    
+  
 }

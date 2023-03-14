@@ -6,14 +6,16 @@
 package com.example.abcde.Entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,18 +44,22 @@ public class Persona extends Base{
     @Column(name = "dni")
     private int dni;
     
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name= "fk_domicilio")
-    private Domicilio domicilio;
+    @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
+    private Set<Libro> libros = new HashSet<>();
     
     
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
-            name= "persona_libro",
-            joinColumns= @JoinColumn(name = "persona_id"),
-            inverseJoinColumns = @JoinColumn(name= "libro_id")
+            name="persona_domicilio",
+            joinColumns = @JoinColumn(name="persona_id"),
+            inverseJoinColumns = @JoinColumn(name="domicilio_id")
     )
-    private List<Libro>libros= new ArrayList<Libro>();
+   // private List<Domicilio>domicilio = new ArrayList<Domicilio>();
+    private Set<Domicilio> domicilio = new HashSet<>();
     
+    /*@ManyToMany(mappedBy="persona", cascade = CascadeType.ALL,fetch= FetchType.LAZY)
+    private List<Domicilio>domicilio;*/
+    
+   
     
 }

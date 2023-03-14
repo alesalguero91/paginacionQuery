@@ -5,11 +5,16 @@
  */
 package com.example.abcde.Entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,7 +44,11 @@ public class Libro extends Base{
     @Column(name = "pagina")
     private int pagina;
     
-    @ManyToMany(cascade = CascadeType.REFRESH)
-    private List<Autor> autores;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "persona_id")
+    @JsonProperty(access = Access.WRITE_ONLY)
+    private Persona persona;
     
+    //@ManyToMany(cascade = CascadeType.REFRESH)
+    //private List<Autor> autores;
 }
